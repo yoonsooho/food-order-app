@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom"
+import Login from "./login/Login"
+import "./App.css"
+import Main from "./Main/Main"
+import MealsList from "./Main/MealsList"
+import { useState } from "react"
+import Modal from "./modal/Modal"
 
 function App() {
+  let [modal, setModal] = useState(false)
+
+  const modalUpHandler = () => {
+    setModal(true)
+  }
+  const modalDownHandler = () => {
+    setModal(false)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Main modalUpHandler={modalUpHandler}>
+      {modal && <Modal modalDownHandler={modalDownHandler} />}
+      <Routes>
+        <Route path="/" element={<MealsList />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+      </Routes>
+    </Main>
+  )
 }
 
-export default App;
+export default App
